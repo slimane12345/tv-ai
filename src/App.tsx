@@ -50,6 +50,7 @@ export default function App() {
   const [proxies, setProxies] = useState<string>('');
   const [useProxy, setUseProxy] = useState(false);
   const [smartRotation, setSmartRotation] = useState(true);
+  const [realismEngine, setRealismEngine] = useState(true);
   const [analysis, setAnalysis] = useState<AIAnalysis | null>(null);
   const [growthStrategy, setGrowthStrategy] = useState<{ ctas: string[], scripts: string[], subLink: string } | null>(null);
   const [viralCampaign, setViralCampaign] = useState<{ day: number, platform: string, content: string }[] | null>(null);
@@ -783,13 +784,51 @@ export default function App() {
                             className="accent-green-500"
                           />
                         </label>
-                        <div className="p-4 bg-green-500/10 rounded-2xl border border-green-500/20">
-                          <p className="text-[10px] text-green-200/70 leading-relaxed">
-                            يتم الآن محاكاة "بصمات متصفح" (Browser Fingerprints) مختلفة لكل نافذة لتقليل احتمالية كشف المشاهدات المتكررة.
+                        <label className="flex items-center justify-between p-3 bg-white/5 rounded-2xl cursor-pointer hover:bg-white/10 transition-all">
+                          <span className="text-sm">محرك الواقعية (تغيير الهوية)</span>
+                          <input 
+                            type="checkbox" 
+                            checked={realismEngine} 
+                            onChange={() => setRealismEngine(!realismEngine)}
+                            className="accent-blue-500"
+                          />
+                        </label>
+                        <div className="p-4 bg-blue-500/10 rounded-2xl border border-blue-500/20">
+                          <p className="text-[10px] text-blue-200/70 leading-relaxed">
+                            عند تفعيل "محرك الواقعية"، سيتم فتح كل فيديو بـ User-Agent مختلف وسرعات تشغيل عشوائية لضمان احتساب المشاهدة كـ "حقيقية".
                           </p>
                         </div>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Proxy Resources */}
+                  <div className="bg-[#111] p-6 rounded-3xl border border-white/5">
+                    <h4 className="font-bold mb-4 flex items-center gap-2">
+                      <ExternalLink size={18} className="text-orange-500" />
+                      مصادر بروكسيات (IP) مقترحة
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {[
+                        { name: "Free Proxy List", url: "https://free-proxy-list.net/" },
+                        { name: "ProxyScan", url: "https://www.proxyscan.io/" },
+                        { name: "Spys.one", url: "http://spys.one/en/" },
+                        { name: "HideMyName", url: "https://hidemy.name/en/proxy-list/" }
+                      ].map((site, i) => (
+                        <a 
+                          key={i} 
+                          href={site.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/5 text-center text-xs transition-all"
+                        >
+                          {site.name}
+                        </a>
+                      ))}
+                    </div>
+                    <p className="text-[10px] text-white/30 mt-4 text-center">
+                      نصيحة: للحصول على مشاهدات "حقيقية" لا تُحذف، يفضل استخدام بروكسيات سكنية (Residential Proxies).
+                    </p>
                   </div>
 
                   <div className={cn(
